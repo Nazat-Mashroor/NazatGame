@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Five Nights at Epsteins</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- START SCREEN -->
+<div id="startScreen">
+  <div class="menu">
+    <h1>FIVE NIGHTS<br>AT EPSTEINS</h1>
+    <button id="playBtn">PLAY</button>
+  </div>
+
+  <div class="characters">
+    <img src="e.jpg" alt="Epstein">
+    <img src="diddy.jpg" alt="Diddy">
+  </div>
+</div>
+
+<!-- SCORE DISPLAY -->
+<div id="score">Score: 0</div>
+
+<!-- GAME SCREEN -->
+<div id="gameScreen">
+  <img id="player" src="diddy.jpg" alt="Player">
+  <img id="enemy" src="e.jpg" alt="Enemy">
+</div>
+
+<!-- CONTROLS (hidden until PLAY) -->
+<div id="controls">
+  <button onclick="moveUp()">↑</button>
+  <div>
+    <button onclick="moveLeft()">←</button>
+    <button onclick="moveDown()">↓</button>
+    <button onclick="moveRight()">→</button>
+  </div>
+</div>
+
+<audio id="bgSound" src="audio.mp3" loop></audio>
+<script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,94 @@
+/* GENERAL */
+body {
+  margin: 0;
+  overflow: hidden;
+  font-family: monospace;
+}
+
+/* START SCREEN */
+#startScreen {
+  width: 100vw;
+  height: 100vh;
+  background: url("bg.jpg") center/cover no-repeat;
+  display: flex;
+  justify-content: flex-start;   /* move content slightly left */
+  align-items: center;
+  padding-left: 60px;            /* space from left edge */
+  gap: 40px;                      /* space between menu & characters */
+  color: white;
+}
+
+/* Menu (title + play button) */
+.menu {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.menu h1 {
+  font-size: 48px;
+  margin: 0 0 20px 0;
+}
+
+.menu button {
+  font-size: 26px;
+  padding: 15px 50px;
+  cursor: pointer;
+}
+
+/* Characters on start screen */
+.characters {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  justify-content: center;
+}
+
+.characters img {
+  width: 200px;      /* fixed reasonable size */
+  max-width: 15vw;   /* scale a bit on smaller screens */
+  height: auto;
+}
+
+/* GAME SCREEN */
+#gameScreen {
+  display: none;
+  width: 100vw;
+  height: 100vh;
+  background: url("bg.jpg") center/cover no-repeat;
+  position: relative;
+}
+
+#player, #enemy {
+  position: absolute;
+  width: 12vw;       /* scale with screen */
+  max-width: 100px;  /* never too big */
+  height: auto;
+  user-select: none;
+}
+
+/* CONTROLS */
+#controls {
+  position: fixed;
+  bottom: 30px;
+  left: 30px;
+  display: none; /* hidden until PLAY */
+}
+
+#controls button {
+  font-size: 24px;
+  padding: 12px 18px;
+  margin: 4px;
+  cursor: pointer;
+}
+
+/* SCORE DISPLAY */
+#score {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  font-size: 24px;
+  color: white;
+  font-weight: bold;
+  z-index: 100; /* make sure it’s on top */
+}
