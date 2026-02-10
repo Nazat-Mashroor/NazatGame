@@ -125,4 +125,3 @@ document.addEventListener("keydown", (e) => {
     case "ArrowRight": moveRight(); break;
   }
 });
-
