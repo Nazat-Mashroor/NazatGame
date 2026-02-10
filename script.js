@@ -1,5 +1,22 @@
 // Sounds
 const clapSound = new Audio("audio/clap.wav");
+const sound = document.getElementById("bgSound");
+
+// Unlock sounds after first user interaction (required by browsers)
+let soundUnlocked = false;
+function unlockSounds() {
+  if (!soundUnlocked) {
+    clapSound.play().then(() => clapSound.pause());
+    clapSound.currentTime = 0;
+
+    sound.play().then(() => sound.pause());
+    sound.currentTime = 0;
+
+    soundUnlocked = true;
+  }
+}
+document.addEventListener("click", unlockSounds, { once: true });
+document.addEventListener("keydown", unlockSounds, { once: true });
 
 // Elements
 const startScreen = document.getElementById("startScreen");
@@ -8,7 +25,6 @@ const playBtn = document.getElementById("playBtn");
 const player = document.getElementById("player");
 const enemy = document.getElementById("enemy");
 const controls = document.getElementById("controls");
-const sound = document.getElementById("bgSound");
 
 let px, py, ex, ey;
 let score = 0;
@@ -19,13 +35,15 @@ function startGame() {
   startScreen.style.display = "none";
   gameScreen.style.display = "block";
   controls.style.display = "block";
+
+  // Play background music
   sound.play();
 
-  // reset positions
+  // Reset positions
   px = 600; py = 400;
   ex = 100; ey = 100;
 
-  // reset score
+  // Reset score
   score = 0;
   document.getElementById("score").textContent = "Score: 0";
   clearInterval(scoreInterval);
@@ -53,7 +71,7 @@ function chase() {
   ey += (py - ey) * 0.008;
 }
 
-// Keep inside screen
+// Keep player & enemy inside screen
 function clampPositions() {
   const playerWidth = player.offsetWidth;
   const enemyWidth = enemy.offsetWidth;
@@ -65,7 +83,7 @@ function clampPositions() {
   ey = Math.max(0, Math.min(window.innerHeight - enemyWidth, ey));
 }
 
-// Game loop
+// Main game loop
 function gameLoop() {
   movePlayerRandom();
   chase();
@@ -79,6 +97,7 @@ function gameLoop() {
 
   // Collision detection
   if (Math.abs(px - ex) < 60 && Math.abs(py - ey) < 60) {
+    // Play clap sound
     clapSound.currentTime = 0;
     clapSound.play();
 
@@ -106,3 +125,4 @@ document.addEventListener("keydown", (e) => {
     case "ArrowRight": moveRight(); break;
   }
 });
+
