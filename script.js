@@ -1,7 +1,10 @@
+// Sounds
+const clapSound = new Audio("audio/clap.wav");
+
+// Elements
 const startScreen = document.getElementById("startScreen");
 const gameScreen = document.getElementById("gameScreen");
 const playBtn = document.getElementById("playBtn");
-
 const player = document.getElementById("player");
 const enemy = document.getElementById("enemy");
 const controls = document.getElementById("controls");
@@ -11,16 +14,18 @@ let px, py, ex, ey;
 let score = 0;
 let scoreInterval;
 
-// start game
+// Start Game
 function startGame() {
   startScreen.style.display = "none";
   gameScreen.style.display = "block";
-  controls.style.display = "block"; // show buttons
+  controls.style.display = "block";
   sound.play();
 
+  // reset positions
   px = 600; py = 400;
   ex = 100; ey = 100;
 
+  // reset score
   score = 0;
   document.getElementById("score").textContent = "Score: 0";
   clearInterval(scoreInterval);
@@ -32,23 +37,23 @@ function startGame() {
   gameLoop();
 }
 
-// button click
+// Play button
 playBtn.onclick = startGame;
 
-// auto random movement
+// Auto random movement for player
 function movePlayerRandom() {
   px += Math.random() * 6 - 3;
   py += Math.random() * 6 - 3;
   clampPositions();
 }
 
-// chase enemy
+// Enemy chase logic
 function chase() {
   ex += (px - ex) * 0.008;
   ey += (py - ey) * 0.008;
 }
 
-// keep inside screen
+// Keep inside screen
 function clampPositions() {
   const playerWidth = player.offsetWidth;
   const enemyWidth = enemy.offsetWidth;
@@ -60,7 +65,7 @@ function clampPositions() {
   ey = Math.max(0, Math.min(window.innerHeight - enemyWidth, ey));
 }
 
-// game loop
+// Game loop
 function gameLoop() {
   movePlayerRandom();
   chase();
@@ -72,7 +77,11 @@ function gameLoop() {
   enemy.style.left = ex + "px";
   enemy.style.top = ey + "px";
 
+  // Collision detection
   if (Math.abs(px - ex) < 60 && Math.abs(py - ey) < 60) {
+    clapSound.currentTime = 0;
+    clapSound.play();
+
     alert("YOU GOT EPSTEINED 💀");
     clearInterval(scoreInterval);
     startGame();
@@ -82,13 +91,13 @@ function gameLoop() {
   requestAnimationFrame(gameLoop);
 }
 
-// button controls
+// Button controls
 function moveUp() { py -= 20; clampPositions(); }
 function moveDown() { py += 20; clampPositions(); }
 function moveLeft() { px -= 20; clampPositions(); }
 function moveRight() { px += 20; clampPositions(); }
 
-// keyboard controls
+// Keyboard controls
 document.addEventListener("keydown", (e) => {
   switch (e.key) {
     case "ArrowUp": moveUp(); break;
